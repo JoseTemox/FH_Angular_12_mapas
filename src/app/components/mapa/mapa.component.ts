@@ -45,7 +45,25 @@ export class MapaComponent implements OnInit {
       width: '250px',
       data: {titulo: marcador.titulo, descripcion: marcador.descripcion}
     });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      //console.log(result);
+
+      if(!result){
+        return;
+      }
+
+      marcador.titulo = result.titulo;
+      marcador.descripcion = result.descripcion;
+
+      this.guardarStorage();
+
+    this.snackBar.open('Marcador Actualizado', 'Cerrar', { duration: 3000 });
+
+    });
   }
+
 
   guardarStorage(){
     localStorage.setItem('marcadores', JSON.stringify(this.marcadores));
